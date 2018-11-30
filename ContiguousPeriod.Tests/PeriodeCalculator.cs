@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ContiguousPeriod.Tests
 {
@@ -6,6 +7,12 @@ namespace ContiguousPeriod.Tests
     {
         internal IEnumerable<Periode> CalculerPeriodeContigue(IEnumerable<Periode> input)
         {
+            if(input.All(p=> p.Valeur == 0))
+            {
+                var start = input.First().Debut;
+                var end = input.Last().Fin;
+                return new List<Periode> { new Periode() { Debut = start, Fin = end, Valeur = 0 } };
+            }
             return input;
         }
     }
