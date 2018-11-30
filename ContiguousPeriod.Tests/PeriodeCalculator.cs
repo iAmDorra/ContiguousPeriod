@@ -5,15 +5,24 @@ namespace ContiguousPeriod.Tests
 {
     internal class PeriodeCalculator
     {
-        internal IEnumerable<Periode> CalculerPeriodeContigue(IEnumerable<Periode> input)
+        internal IEnumerable<Periode> CalculerPeriodeContigue(IEnumerable<Periode> source)
         {
-            if (input.All(p => p.Valeur == 0))
+            var periodeContigues = new List<Periode>();
+            foreach (var periode in source.Where(p => p.Value == 0))
             {
-                var start = input.First().Debut;
-                var end = input.Last().Fin;
-                return new List<Periode> { new Periode(start, end, 0) };
+                var savedZeroPeriod = periodeContigues.LastOrDefault(p => p.Value == 0);
+                if (savedZeroPeriod != null && periode.Start == savedZeroPeriod.End.AddDays(1))
+                {
+                    savedZeroPeriod.updateEndDate(periode.End);
+                }
+                else
+                {
+                    periodeContigues.Add(new Periode(periode.Start, periode.End, 0));
+                }
             }
-            return input;
+
+            periodeContigues.AddRange(source.Where(p => p.Value != 0));
+            return periodeContigues.OrderBy(p => p.Start);
         }
     }
 }

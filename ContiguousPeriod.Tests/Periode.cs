@@ -6,21 +6,26 @@ namespace ContiguousPeriod.Tests
     {
         public Periode(DateTime start, DateTime end, int value)
         {
-            this.Debut = start;
-            this.Fin = end;
-            this.Valeur = value;
+            this.Start = start;
+            this.End = end;
+            this.Value = value;
         }
 
-        public DateTime Debut { get; private set; }
-        public DateTime Fin { get; private set; }
-        public decimal Valeur { get; private set; }
+        public DateTime Start { get; private set; }
+        public DateTime End { get; private set; }
+        public decimal Value { get; private set; }
 
         public bool Equals(Periode other)
         {
             return other != null &&
-                this.Debut == other.Debut &&
-                this.Fin == other.Fin &&
-                this.Valeur == other.Valeur;
+                this.Start == other.Start &&
+                this.End == other.End &&
+                this.Value == other.Value;
+        }
+
+        internal void updateEndDate(DateTime fin)
+        {
+            this.End = fin;
         }
 
         public override bool Equals(object obj)
