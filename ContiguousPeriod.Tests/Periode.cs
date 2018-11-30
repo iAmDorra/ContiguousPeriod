@@ -4,9 +4,16 @@ namespace ContiguousPeriod.Tests
 {
     internal class Periode : IEquatable<Periode>
     {
-        public DateTime Debut { get; set; }
-        public DateTime Fin { get; set; }
-        public decimal Valeur { get; set; }
+        public Periode(DateTime start, DateTime end, int value)
+        {
+            this.Debut = start;
+            this.Fin = end;
+            this.Valeur = value;
+        }
+
+        public DateTime Debut { get; private set; }
+        public DateTime Fin { get; private set; }
+        public decimal Valeur { get; private set; }
 
         public bool Equals(Periode other)
         {

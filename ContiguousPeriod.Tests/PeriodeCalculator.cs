@@ -7,11 +7,11 @@ namespace ContiguousPeriod.Tests
     {
         internal IEnumerable<Periode> CalculerPeriodeContigue(IEnumerable<Periode> input)
         {
-            if(input.All(p=> p.Valeur == 0))
+            if (input.All(p => p.Valeur == 0))
             {
                 var start = input.First().Debut;
                 var end = input.Last().Fin;
-                return new List<Periode> { new Periode() { Debut = start, Fin = end, Valeur = 0 } };
+                return new List<Periode> { new Periode(start, end, 0) };
             }
             return input;
         }
