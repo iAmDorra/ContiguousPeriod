@@ -10,7 +10,7 @@ class Period :
 class TestContiguousPeriod(unittest.TestCase):
     
     def CalculateContiguousPeriods(self, periods):
-        if(periods.__len__() > 1):
+        if(periods.__len__() > 1 and all(p.rate == periods[0].rate for p in periods)):
             return self.MergePeriods(periods);
         return periods;
 
@@ -46,6 +46,14 @@ class TestContiguousPeriod(unittest.TestCase):
         assert contiguousPeriod[0].rate == period1.rate
         assert contiguousPeriod[0].startDate == startDate
         assert contiguousPeriod[0].endDate == endDate
+    
+    def test_should_not_merge_periods_when_having_different_rates(self):
+        period1 = Period(0,datetime(2019,1,1),datetime(2019,1,31))
+        period2 = Period(10,datetime(2019,2,1),datetime(2019,2,28))
+        
+        contiguousPeriod = self.CalculateContiguousPeriods([period1, period2])
+
+        assert contiguousPeriod.__len__() == 2
     
 if __name__ == '__main__':
     unittest.main()
