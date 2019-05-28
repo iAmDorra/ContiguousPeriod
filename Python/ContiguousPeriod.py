@@ -10,15 +10,26 @@ class Period :
 class TestContiguousPeriod(unittest.TestCase):
     
     def CalculateContiguousPeriods(self, periods):
-        if(periods.__len__() > 1 and all(p.rate == periods[0].rate for p in periods)):
-            return self.MergePeriods(periods);
+        periodToMerge = []
+        periodNotToMerge = []
+        i = 0
+        while(i < periods.__len__()):
+            if(periods[i].rate == 0):
+                periodToMerge.append(periods[i])
+            else :
+                periodNotToMerge.append(periods[i])
+            i+=1
+                                 
+        if(periodToMerge.__len__() > 1):
+            periodNotToMerge.insert(0, self.MergePeriods(periodToMerge));
+            return periodNotToMerge;
         return periods;
 
     def MergePeriods(self, periods):
         startDate = periods[0].startDate
         endDate = periods[periods.__len__() - 1].endDate
         mergedPeriod = Period(0, startDate, endDate)
-        return [mergedPeriod]
+        return mergedPeriod
 
     def test_should_return_no_period_when_having_empty_collection(self):
         assert self.CalculateContiguousPeriods([]) == []
@@ -54,6 +65,20 @@ class TestContiguousPeriod(unittest.TestCase):
         contiguousPeriod = self.CalculateContiguousPeriods([period1, period2])
 
         assert contiguousPeriod.__len__() == 2
+    
+    def test_should_merge_only_zero_rate_of_contiguous_periods(self):
+        startDate = datetime(2019,1,1)
+        endDate = datetime(2019,3,14)
+        period1 = Period(0,startDate,datetime(2019,1,31))
+        period2 = Period(0,datetime(2019,2,1),endDate)
+        period3 = Period(20,datetime(2019,3,15),datetime(2019,4,28))
+        
+        contiguousPeriod = self.CalculateContiguousPeriods([period1, period2, period3])
+
+        assert contiguousPeriod.__len__() == 2
+        assert contiguousPeriod[0].startDate == startDate
+        assert contiguousPeriod[0].endDate == endDate
+        assert contiguousPeriod[1] == period3
     
 if __name__ == '__main__':
     unittest.main()
