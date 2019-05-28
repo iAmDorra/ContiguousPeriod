@@ -11,11 +11,14 @@ class TestContiguousPeriod(unittest.TestCase):
     
     def CalculateContiguousPeriods(self, periods):
         if(periods.__len__() > 1):
-            startDate = periods[0].startDate
-            endDate = periods[periods.__len__()-1].endDate
-            mergedPeriod = Period(0, startDate, endDate)
-            return [mergedPeriod]
+            return self.MergePeriods(periods);
         return periods;
+
+    def MergePeriods(self, periods):
+        startDate = periods[0].startDate
+        endDate = periods[periods.__len__() - 1].endDate
+        mergedPeriod = Period(0, startDate, endDate)
+        return [mergedPeriod]
 
     def test_should_return_no_period_when_having_empty_collection(self):
         assert self.CalculateContiguousPeriods([]) == []
@@ -35,7 +38,7 @@ class TestContiguousPeriod(unittest.TestCase):
         startDate = datetime(2019,1,1)
         endDate = datetime(2019,2,28)
         period1 = Period(0,startDate,datetime(2019,1,31))
-        period2 = Period(0,datetime(2019,2,1),datetime(2019,2,28))
+        period2 = Period(0,datetime(2019,2,1),endDate)
         
         contiguousPeriod = self.CalculateContiguousPeriods([period1, period2])
 
