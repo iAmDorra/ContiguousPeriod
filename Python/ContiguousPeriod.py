@@ -8,7 +8,7 @@ class Period :
         self.endDate = endDate
 
 class PeriodCalculator :
-    def CalculateContiguousPeriods(self, periods):
+    def calculate_contiguous_periods(self, periods):
         periodToMerge = []
         periodNotToMerge = []
         i = 0
@@ -20,11 +20,11 @@ class PeriodCalculator :
             i+=1
                                  
         if(periodToMerge.__len__() > 1):
-            periodNotToMerge.insert(0, self.MergePeriods(periodToMerge));
+            periodNotToMerge.insert(0, self.merge_periods(periodToMerge));
             return periodNotToMerge;
         return periods;
 
-    def MergePeriods(self, periods):
+    def merge_periods(self, periods):
         startDate = periods[0].startDate
         endDate = periods[periods.__len__() - 1].endDate
         mergedPeriod = Period(0, startDate, endDate)
@@ -34,20 +34,20 @@ class TestContiguousPeriod(unittest.TestCase):
     def test_should_return_no_period_when_having_empty_collection(self):
         calculator = PeriodCalculator()
 
-        assert calculator.CalculateContiguousPeriods([]) == []
+        assert calculator.calculate_contiguous_periods([]) == []
 
     def test_should_return_same_period_when_having_one_period(self):
         period = Period(0, datetime(2019,1,1), datetime(2019,1,31))
         calculator = PeriodCalculator()
 
-        assert calculator.CalculateContiguousPeriods([period]) == [period]
+        assert calculator.calculate_contiguous_periods([period]) == [period]
 
     def test_should_return_one_period_when_having_two_zero_rate_contiguous_periods(self):
         period1 = Period(0, datetime(2019,1,1), datetime(2019,1,31))
         period2 = Period(0, datetime(2019,1,1), datetime(2019,1,31))
         calculator = PeriodCalculator()
 
-        contiguousPeriod = calculator.CalculateContiguousPeriods([period1, period2])
+        contiguousPeriod = calculator.calculate_contiguous_periods([period1, period2])
 
         assert contiguousPeriod.__len__() == 1
         assert contiguousPeriod[0].rate == period1.rate
@@ -59,7 +59,7 @@ class TestContiguousPeriod(unittest.TestCase):
         period2 = Period(0,datetime(2019,2,1),endDate)
         calculator = PeriodCalculator()
         
-        contiguousPeriod = calculator.CalculateContiguousPeriods([period1, period2])
+        contiguousPeriod = calculator.calculate_contiguous_periods([period1, period2])
 
         assert contiguousPeriod.__len__() == 1
         assert contiguousPeriod[0].rate == period1.rate
@@ -71,7 +71,7 @@ class TestContiguousPeriod(unittest.TestCase):
         period2 = Period(10,datetime(2019,2,1),datetime(2019,2,28))
         calculator = PeriodCalculator()
         
-        contiguousPeriod = calculator.CalculateContiguousPeriods([period1, period2])
+        contiguousPeriod = calculator.calculate_contiguous_periods([period1, period2])
 
         assert contiguousPeriod.__len__() == 2
     
@@ -83,7 +83,7 @@ class TestContiguousPeriod(unittest.TestCase):
         period3 = Period(20,datetime(2019,3,15),datetime(2019,4,28))
         calculator = PeriodCalculator()
         
-        contiguousPeriod = calculator.CalculateContiguousPeriods([period1, period2, period3])
+        contiguousPeriod = calculator.calculate_contiguous_periods([period1, period2, period3])
 
         assert contiguousPeriod.__len__() == 2
         assert contiguousPeriod[0].startDate == startDate
