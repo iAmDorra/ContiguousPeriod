@@ -26,7 +26,7 @@ class PeriodCalculator :
 
     def merge_periods(self, periods):
         startDate = periods[0].startDate
-        endDate = periods[periods.__len__() - 1].endDate
+        endDate = periods[-1].endDate
         mergedPeriod = Period(0, startDate, endDate)
         return mergedPeriod
     
