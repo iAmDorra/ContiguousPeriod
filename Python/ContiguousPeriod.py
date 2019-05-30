@@ -16,19 +16,22 @@ class Period:
 
 class PeriodCalculator :
     def calculate_contiguous_periods(self, periods):
-        periodToMerge = []
         periodNotToMerge = []
+        mergedPeriod = None
 
         for period in periods:
             if(period.rate == 0):
-                periodToMerge.append(period)
-            else :
+                if(mergedPeriod is None):
+                    mergedPeriod = period
+                mergedPeriod = mergedPeriod.merge_periods(period)
+            else:
                 periodNotToMerge.append(period)
                                  
-        if(len(periodToMerge) > 1):
-            periodNotToMerge.insert(0, periodToMerge[0].merge_periods(periodToMerge[-1]));
-            return periodNotToMerge;
-        return periods;
+        if(mergedPeriod is None):
+            return periods;
+        
+        periodNotToMerge.insert(0, mergedPeriod);
+        return periodNotToMerge;
     
 class TestContiguousPeriod(unittest.TestCase):
     def test_should_return_no_period_when_having_empty_collection(self):
