@@ -11,14 +11,12 @@ class PeriodCalculator :
     def calculate_contiguous_periods(self, periods):
         periodToMerge = []
         periodNotToMerge = []
-        
-        i = 0
-        while(i < len(periods)):
-            if(periods[i].rate == 0):
-                periodToMerge.append(periods[i])
+
+        for period in periods:
+            if(period.rate == 0):
+                periodToMerge.append(period)
             else :
-                periodNotToMerge.append(periods[i])
-            i+=1
+                periodNotToMerge.append(period)
                                  
         if(len(periodToMerge) > 1):
             periodNotToMerge.insert(0, self.merge_periods(periodToMerge));
