@@ -8,6 +8,11 @@ class Period:
     startDate: datetime
     endDate: datetime
     
+    def merge_periods(self, period2):
+        startDate = self.startDate
+        endDate = period2.endDate
+        mergedPeriod = Period(0, startDate, endDate)
+        return mergedPeriod
 
 class PeriodCalculator :
     def calculate_contiguous_periods(self, periods):
@@ -21,15 +26,9 @@ class PeriodCalculator :
                 periodNotToMerge.append(period)
                                  
         if(len(periodToMerge) > 1):
-            periodNotToMerge.insert(0, self.merge_periods(periodToMerge[0],periodToMerge[-1]));
+            periodNotToMerge.insert(0, periodToMerge[0].merge_periods(periodToMerge[-1]));
             return periodNotToMerge;
         return periods;
-
-    def merge_periods(self, period1, period2):
-        startDate = period1.startDate
-        endDate = period2.endDate
-        mergedPeriod = Period(0, startDate, endDate)
-        return mergedPeriod
     
 class TestContiguousPeriod(unittest.TestCase):
     def test_should_return_no_period_when_having_empty_collection(self):
