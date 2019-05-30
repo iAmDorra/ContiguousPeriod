@@ -11,6 +11,7 @@ class PeriodCalculator :
     def calculate_contiguous_periods(self, periods):
         periodToMerge = []
         periodNotToMerge = []
+        
         i = 0
         while(i < len(periods)):
             if(periods[i].rate == 0):
@@ -34,13 +35,13 @@ class TestContiguousPeriod(unittest.TestCase):
     def test_should_return_no_period_when_having_empty_collection(self):
         calculator = PeriodCalculator()
 
-        assert calculator.calculate_contiguous_periods([]) == []
+        self.assertEqual(calculator.calculate_contiguous_periods([]), [])
 
     def test_should_return_same_period_when_having_one_period(self):
         period = Period(0, datetime(2019,1,1), datetime(2019,1,31))
         calculator = PeriodCalculator()
 
-        assert calculator.calculate_contiguous_periods([period]) == [period]
+        self.assertEqual(calculator.calculate_contiguous_periods([period]), [period])
 
     def test_should_return_one_period_when_having_two_zero_rate_contiguous_periods(self):
         period1 = Period(0, datetime(2019,1,1), datetime(2019,1,31))
@@ -49,8 +50,8 @@ class TestContiguousPeriod(unittest.TestCase):
 
         contiguousPeriod = calculator.calculate_contiguous_periods([period1, period2])
 
-        assert len(contiguousPeriod) == 1
-        assert contiguousPeriod[0].rate == period1.rate
+        self.assertEqual(len(contiguousPeriod), 1)
+        self.assertEqual(contiguousPeriod[0].rate, period1.rate)
 
     def test_should_merge_periods_when_having_two_zero_rate_contiguous_periods(self):
         startDate = datetime(2019,1,1)
@@ -61,10 +62,10 @@ class TestContiguousPeriod(unittest.TestCase):
         
         contiguousPeriod = calculator.calculate_contiguous_periods([period1, period2])
 
-        assert len(contiguousPeriod) == 1
-        assert contiguousPeriod[0].rate == period1.rate
-        assert contiguousPeriod[0].startDate == startDate
-        assert contiguousPeriod[0].endDate == endDate
+        self.assertEqual(len(contiguousPeriod), 1)
+        self.assertEqual(contiguousPeriod[0].rate, period1.rate)
+        self.assertEqual(contiguousPeriod[0].startDate, startDate)
+        self.assertEqual(contiguousPeriod[0].endDate, endDate)
     
     def test_should_not_merge_periods_when_having_different_rates(self):
         period1 = Period(0,datetime(2019,1,1),datetime(2019,1,31))
@@ -73,7 +74,7 @@ class TestContiguousPeriod(unittest.TestCase):
         
         contiguousPeriod = calculator.calculate_contiguous_periods([period1, period2])
 
-        assert len(contiguousPeriod) == 2
+        self.assertEqual(len(contiguousPeriod), 2)
     
     def test_should_merge_only_zero_rate_of_contiguous_periods(self):
         startDate = datetime(2019,1,1)
@@ -85,10 +86,10 @@ class TestContiguousPeriod(unittest.TestCase):
         
         contiguousPeriod = calculator.calculate_contiguous_periods([period1, period2, period3])
 
-        assert len(contiguousPeriod) == 2
-        assert contiguousPeriod[0].startDate == startDate
-        assert contiguousPeriod[0].endDate == endDate
-        assert contiguousPeriod[1] == period3
+        self.assertEqual(len(contiguousPeriod), 2)
+        self.assertEqual(contiguousPeriod[0].startDate, startDate)
+        self.assertEqual(contiguousPeriod[0].endDate, endDate)
+        self.assertEqual(contiguousPeriod[1], period3)
     
 if __name__ == '__main__':
     unittest.main()
