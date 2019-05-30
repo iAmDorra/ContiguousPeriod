@@ -1,11 +1,13 @@
 import unittest
 from datetime import datetime
+from dataclasses import dataclass
 
-class Period :
-    def __init__(self, rate, startDate, endDate):
-        self.rate = rate
-        self.startDate = startDate
-        self.endDate = endDate
+@dataclass
+class Period:
+    rate: int
+    startDate: datetime
+    endDate: datetime
+    
 
 class PeriodCalculator :
     def calculate_contiguous_periods(self, periods):
