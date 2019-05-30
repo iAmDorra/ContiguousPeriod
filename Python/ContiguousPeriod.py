@@ -12,14 +12,14 @@ class PeriodCalculator :
         periodToMerge = []
         periodNotToMerge = []
         i = 0
-        while(i < periods.__len__()):
+        while(i < len(periods)):
             if(periods[i].rate == 0):
                 periodToMerge.append(periods[i])
             else :
                 periodNotToMerge.append(periods[i])
             i+=1
                                  
-        if(periodToMerge.__len__() > 1):
+        if(len(periodToMerge) > 1):
             periodNotToMerge.insert(0, self.merge_periods(periodToMerge));
             return periodNotToMerge;
         return periods;
@@ -49,7 +49,7 @@ class TestContiguousPeriod(unittest.TestCase):
 
         contiguousPeriod = calculator.calculate_contiguous_periods([period1, period2])
 
-        assert contiguousPeriod.__len__() == 1
+        assert len(contiguousPeriod) == 1
         assert contiguousPeriod[0].rate == period1.rate
 
     def test_should_merge_periods_when_having_two_zero_rate_contiguous_periods(self):
@@ -61,7 +61,7 @@ class TestContiguousPeriod(unittest.TestCase):
         
         contiguousPeriod = calculator.calculate_contiguous_periods([period1, period2])
 
-        assert contiguousPeriod.__len__() == 1
+        assert len(contiguousPeriod) == 1
         assert contiguousPeriod[0].rate == period1.rate
         assert contiguousPeriod[0].startDate == startDate
         assert contiguousPeriod[0].endDate == endDate
@@ -73,7 +73,7 @@ class TestContiguousPeriod(unittest.TestCase):
         
         contiguousPeriod = calculator.calculate_contiguous_periods([period1, period2])
 
-        assert contiguousPeriod.__len__() == 2
+        assert len(contiguousPeriod) == 2
     
     def test_should_merge_only_zero_rate_of_contiguous_periods(self):
         startDate = datetime(2019,1,1)
@@ -85,7 +85,7 @@ class TestContiguousPeriod(unittest.TestCase):
         
         contiguousPeriod = calculator.calculate_contiguous_periods([period1, period2, period3])
 
-        assert contiguousPeriod.__len__() == 2
+        assert len(contiguousPeriod) == 2
         assert contiguousPeriod[0].startDate == startDate
         assert contiguousPeriod[0].endDate == endDate
         assert contiguousPeriod[1] == period3
