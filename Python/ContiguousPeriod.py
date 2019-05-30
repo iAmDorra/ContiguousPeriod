@@ -21,13 +21,13 @@ class PeriodCalculator :
                 periodNotToMerge.append(period)
                                  
         if(len(periodToMerge) > 1):
-            periodNotToMerge.insert(0, self.merge_periods(periodToMerge));
+            periodNotToMerge.insert(0, self.merge_periods(periodToMerge[0],periodToMerge[-1]));
             return periodNotToMerge;
         return periods;
 
-    def merge_periods(self, periods):
-        startDate = periods[0].startDate
-        endDate = periods[-1].endDate
+    def merge_periods(self, period1, period2):
+        startDate = period1.startDate
+        endDate = period2.endDate
         mergedPeriod = Period(0, startDate, endDate)
         return mergedPeriod
     
