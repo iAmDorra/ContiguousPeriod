@@ -6,10 +6,6 @@ public class Periode {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public Periode(int rate) {
-        this.rate = rate;
-    }
-
     public Periode(int rate, LocalDate startDate, LocalDate endDate) {
         this.rate = rate;
         this.startDate = startDate;
@@ -37,5 +33,9 @@ public class Periode {
 
     public Periode merge(Periode other) {
         return new Periode(this.rate, this.startDate, other.endDate);
+    }
+
+    public boolean before(Periode other) {
+        return this.startDate.isBefore(other.startDate);
     }
 }
