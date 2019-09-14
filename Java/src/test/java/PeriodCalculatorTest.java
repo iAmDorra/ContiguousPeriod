@@ -21,8 +21,8 @@ public class PeriodCalculatorTest {
     public void should_return_one_period_when_having_two_zero_rate_contiguous_periods()
     {
         List<Periode> input = new ArrayList<Periode>();
-        input.add(new Periode(0, LocalDate.now(), LocalDate.now()));
-        input.add(new Periode(0, LocalDate.now(), LocalDate.now()));
+        input.add(new Periode(0, LocalDate.of(2019,1,1), LocalDate.of(2019,1,2)));
+        input.add(new Periode(0, LocalDate.of(2019,1,3), LocalDate.of(2019,1,4)));
         PeriodeCalculator calculator = new PeriodeCalculator();
 
         List<Periode> output = calculator.MergeContiguousPeriods(input);
@@ -135,5 +135,25 @@ public class PeriodCalculatorTest {
         Assertions.assertThat(output.size()).isEqualTo(2);
         Assertions.assertThat(output.contains(nonZeroRatePeriod)).isTrue();
         Assertions.assertThat(output.contains(new Periode(0, startDate, endDate))).isTrue();
+    }
+
+    @Test
+    public void Should_union_only_first_zero_contiguous_periods(){
+        List<Periode> input = new ArrayList<Periode>();
+        LocalDate startDate = LocalDate.of(2019,2,1);
+        input.add(new Periode(0, startDate, LocalDate.of(2019,2,28)));
+
+        LocalDate endDate= LocalDate.of(2019,3,28);
+        input.add(new Periode(0, LocalDate.of(2019,3,1), endDate));
+
+        Periode nonMergedPeriod = new Periode(0, LocalDate.of(2019, 5, 1), LocalDate.of(2019, 5, 30));
+        input.add(nonMergedPeriod);
+        PeriodeCalculator calculator = new PeriodeCalculator();
+
+        List<Periode> output = calculator.MergeContiguousPeriods(input);
+
+        Assertions.assertThat(output.size()).isEqualTo(2);
+        Assertions.assertThat(output.contains(new Periode(0, startDate, endDate))).isTrue();
+        Assertions.assertThat(output.contains(nonMergedPeriod)).isTrue();
     }
 }

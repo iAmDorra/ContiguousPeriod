@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,9 +23,17 @@ public class PeriodeCalculator {
 
     private Stream<Periode> mergeZeroRateContiguousPeriods(Stream<Periode> zeroPeriods) {
         Periode[] zeroRatePeriods = zeroPeriods.toArray(Periode[]::new);
-        Periode firstPeriod = zeroRatePeriods[0];
-        Periode lastPeriod = zeroRatePeriods[zeroRatePeriods.length - 1];
-        Periode mergedPeriod =  firstPeriod.merge(lastPeriod);
-        return Stream.of(mergedPeriod);
+        List<Periode> mergedPeriods = new ArrayList<>();
+        for (int periodIndex = 0; periodIndex < zeroRatePeriods.length - 1; periodIndex++) {
+            if (zeroRatePeriods[periodIndex].isContiguousTo(zeroRatePeriods[periodIndex + 1])) {
+                Periode mergedPeriod =  zeroRatePeriods[periodIndex].merge(zeroRatePeriods[periodIndex + 1]);
+                mergedPeriods.add(mergedPeriod);
+            }
+            else {
+                mergedPeriods.add(zeroRatePeriods[periodIndex + 1]);
+            }
+        }
+
+        return mergedPeriods.stream();
     }
 }

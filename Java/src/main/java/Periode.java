@@ -38,4 +38,8 @@ public class Periode {
     public boolean before(Periode other) {
         return this.startDate.isBefore(other.startDate);
     }
+
+    public boolean isContiguousTo(Periode other) {
+        return this.endDate.plusDays(1).isEqual(other.startDate);
+    }
 }
