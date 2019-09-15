@@ -156,4 +156,24 @@ public class PeriodCalculatorTest {
         Assertions.assertThat(output.contains(new Periode(0, startDate, endDate))).isTrue();
         Assertions.assertThat(output.contains(nonMergedPeriod)).isTrue();
     }
+
+    @Test
+    public void Should_union_only_lastest_zero_contiguous_periods(){
+        List<Periode> input = new ArrayList<Periode>();
+        Periode nonMergedPeriod = new Periode(0, LocalDate.of(2019,2,1), LocalDate.of(2019,2,28));
+        input.add(nonMergedPeriod);
+
+        LocalDate startDate = LocalDate.of(2019,4,1);
+        input.add(new Periode(0, startDate, LocalDate.of(2019,4,30)));
+
+        LocalDate endDate = LocalDate.of(2019, 5, 30);
+        input.add(new Periode(0, LocalDate.of(2019, 5, 1), endDate));
+        PeriodeCalculator calculator = new PeriodeCalculator();
+
+        List<Periode> output = calculator.MergeContiguousPeriods(input);
+
+        Assertions.assertThat(output.size()).isEqualTo(2);
+        Assertions.assertThat(output.contains(new Periode(0, startDate, endDate))).isTrue();
+        Assertions.assertThat(output.contains(nonMergedPeriod)).isTrue();
+    }
 }

@@ -24,13 +24,17 @@ public class PeriodeCalculator {
     private Stream<Periode> mergeZeroRateContiguousPeriods(Stream<Periode> zeroPeriods) {
         Periode[] zeroRatePeriods = zeroPeriods.toArray(Periode[]::new);
         List<Periode> mergedPeriods = new ArrayList<>();
-        for (int periodIndex = 0; periodIndex < zeroRatePeriods.length - 1; periodIndex++) {
-            if (zeroRatePeriods[periodIndex].isContiguousTo(zeroRatePeriods[periodIndex + 1])) {
-                Periode mergedPeriod =  zeroRatePeriods[periodIndex].merge(zeroRatePeriods[periodIndex + 1]);
+        int mergedPeriodIndex = 0;
+        mergedPeriods.add(zeroRatePeriods[0]);
+        for (int periodIndex = 1; periodIndex < zeroRatePeriods.length; periodIndex++) {
+            if (mergedPeriods.get(mergedPeriodIndex).isContiguousTo(zeroRatePeriods[periodIndex])) {
+                Periode mergedPeriod =  mergedPeriods.get(mergedPeriodIndex).merge(zeroRatePeriods[periodIndex]);
+                mergedPeriods.remove(mergedPeriodIndex);
                 mergedPeriods.add(mergedPeriod);
             }
             else {
-                mergedPeriods.add(zeroRatePeriods[periodIndex + 1]);
+                mergedPeriods.add(zeroRatePeriods[periodIndex]);
+                mergedPeriodIndex++;
             }
         }
 
