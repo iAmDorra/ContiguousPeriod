@@ -2,178 +2,166 @@ import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.Month;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class PeriodCalculatorTest {
     @Test
     public void should_return_the_same_period_when_having_no_one()
     {
-        List<Periode> input = new ArrayList<Periode>();
-        PeriodeCalculator calculator = new PeriodeCalculator();
+        List<Period> input = Collections.emptyList();
+        PeriodCalculator calculator = new PeriodCalculator();
 
-        List<Periode> output = calculator.MergeContiguousPeriods(input);
+        List<Period> output = calculator.mergeContiguousPeriods(input);
 
-        Assertions.assertThat(output.isEmpty()).isEqualTo(true);
+        Assertions.assertThat(output).isEmpty();
     }
 
     @Test
     public void should_return_one_period_when_having_two_zero_rate_contiguous_periods()
     {
-        List<Periode> input = new ArrayList<Periode>();
-        input.add(new Periode(0, LocalDate.of(2019,1,1), LocalDate.of(2019,1,2)));
-        input.add(new Periode(0, LocalDate.of(2019,1,3), LocalDate.of(2019,1,4)));
-        PeriodeCalculator calculator = new PeriodeCalculator();
+        List<Period> input = Arrays.asList(
+                new Period(0, LocalDate.of(2019, Month.JANUARY, 1), LocalDate.of(2019, Month.JANUARY, 2)),
+                new Period(0, LocalDate.of(2019, Month.JANUARY, 3), LocalDate.of(2019, Month.JANUARY, 4))
+        );
+        PeriodCalculator calculator = new PeriodCalculator();
 
-        List<Periode> output = calculator.MergeContiguousPeriods(input);
+        List<Period> output = calculator.mergeContiguousPeriods(input);
 
-        Assertions.assertThat(output.size()).isEqualTo(1);
+        Assertions.assertThat(output).hasSize(1);
         Assertions.assertThat(output.get(0).getRate()).isEqualTo(0);
     }
 
     @Test
     public void should_merge_periods_when_having_two_zero_rate_contiguous_periods()
     {
-        List<Periode> input = new ArrayList<Periode>();
-        LocalDate startDate= LocalDate.of(2019,1,1);
-        input.add(new Periode(
-                0,
-                startDate,
-                LocalDate.of(2019,1,31)));
-        LocalDate endDate= LocalDate.of(2019,2,28);
-        input.add(new Periode(
-                0,
-                LocalDate.of(2019,2,1),
-                endDate));
-        PeriodeCalculator calculator = new PeriodeCalculator();
+        LocalDate startDate = LocalDate.of(2019, Month.JANUARY, 1);
+        LocalDate endDate = LocalDate.of(2019, Month.FEBRUARY, 28);
 
-        List<Periode> output = calculator.MergeContiguousPeriods(input);
+        List<Period> input = Arrays.asList(
+                new Period(0, startDate, LocalDate.of(2019, Month.JANUARY, 31)),
+                new Period(0, LocalDate.of(2019, Month.FEBRUARY, 1), endDate)
+        );
+        PeriodCalculator calculator = new PeriodCalculator();
 
-        Assertions.assertThat(output.size()).isEqualTo(1);
-        Assertions.assertThat(output.get(0)).isEqualTo(new Periode(0, startDate ,endDate ));
+        List<Period> output = calculator.mergeContiguousPeriods(input);
+
+        Assertions.assertThat(output).containsExactly(new Period(0, startDate, endDate));
     }
 
     @Test
-    public void Should_union_only_zero_period(){
-        List<Periode> input = new ArrayList<Periode>();
-        Periode nonZeroRatePeriod = new Periode(10, LocalDate.of(2019, 1, 1), LocalDate.of(2019, 1, 31));
-        input.add(nonZeroRatePeriod);
-        LocalDate startDate= LocalDate.of(2019,2,1);
-        input.add(new Periode(0, startDate, LocalDate.of(2019,2,28)));
-        LocalDate endDate= LocalDate.of(2019,3,28);
-        input.add(new Periode(0, LocalDate.of(2019,3,1), endDate));
-        PeriodeCalculator calculator = new PeriodeCalculator();
+    public void should_union_only_zero_period(){
+        LocalDate startDate = LocalDate.of(2019, Month.FEBRUARY, 1);
+        LocalDate endDate = LocalDate.of(2019, Month.MARCH, 28);
 
-        List<Periode> output = calculator.MergeContiguousPeriods(input);
+        Period nonZeroRatePeriod = new Period(10, LocalDate.of(2019, Month.JANUARY, 1), LocalDate.of(2019, Month.JANUARY, 31));
+        List<Period> input = Arrays.asList(
+                nonZeroRatePeriod,
+                new Period(0, startDate, LocalDate.of(2019, Month.FEBRUARY, 28)),
+                new Period(0, LocalDate.of(2019, Month.MARCH, 1), endDate)
+        );
+        PeriodCalculator calculator = new PeriodCalculator();
 
-        Assertions.assertThat(output.size()).isEqualTo(2);
-        Assertions.assertThat(output.get(0)).isEqualTo(nonZeroRatePeriod);
-        Assertions.assertThat(output.get(1)).isEqualTo(new Periode(0, startDate, endDate));
+        List<Period> output = calculator.mergeContiguousPeriods(input);
+
+        Assertions.assertThat(output).containsExactly(nonZeroRatePeriod, new Period(0, startDate, endDate));
     }
 
     @Test
-    public void Should_union_zero_periods(){
-        List<Periode> input = new ArrayList<Periode>();
-        Periode nonZeroRatePeriod = new Periode(10, LocalDate.of(2019, 1, 1), LocalDate.of(2019, 1, 31));
-        input.add(nonZeroRatePeriod);
+    public void should_union_zero_periods(){
+        LocalDate startDate = LocalDate.of(2019, Month.FEBRUARY, 1);
+        LocalDate endDate = LocalDate.of(2019, Month.MARCH, 28);
 
-        LocalDate startDate = LocalDate.of(2019,2,1);
-        input.add(new Periode(0, startDate, LocalDate.of(2019,2,28)));
+        Period nonZeroRatePeriod = new Period(10, LocalDate.of(2019, Month.JANUARY, 1), LocalDate.of(2019, Month.JANUARY, 31));
+        Period lastNonZeroPeriod = new Period(20, LocalDate.of(2019, 4, 1), LocalDate.of(2019, 4, 30));
+        List<Period> input = Arrays.asList(
+                nonZeroRatePeriod,
+                new Period(0, startDate, LocalDate.of(2019, Month.FEBRUARY, 28)),
+                new Period(0, LocalDate.of(2019, Month.MARCH, 1), endDate),
+                lastNonZeroPeriod
+        );
 
-        LocalDate endDate= LocalDate.of(2019,3,28);
-        input.add(new Periode(0, LocalDate.of(2019,3,1), endDate));
+        PeriodCalculator calculator = new PeriodCalculator();
 
-        Periode lastNonZeroPeriod = new Periode(20, LocalDate.of(2019, 4, 1), LocalDate.of(2019, 4, 30));
-        input.add(lastNonZeroPeriod);
-        PeriodeCalculator calculator = new PeriodeCalculator();
+        List<Period> output = calculator.mergeContiguousPeriods(input);
 
-        List<Periode> output = calculator.MergeContiguousPeriods(input);
-
-        Assertions.assertThat(output.size()).isEqualTo(3);
-        Assertions.assertThat(output.get(0)).isEqualTo(nonZeroRatePeriod);
-        Assertions.assertThat(output.get(1)).isEqualTo(lastNonZeroPeriod);
-        Assertions.assertThat(output.get(2)).isEqualTo(new Periode(0, startDate, endDate));
+        Assertions.assertThat(output).containsExactly(nonZeroRatePeriod, lastNonZeroPeriod, new Period(0, startDate, endDate));
     }
 
     @Test
-    public void Should_union_zero_contiguous_periods(){
-        List<Periode> input = new ArrayList<Periode>();
-        Periode nonZeroRatePeriod = new Periode(10, LocalDate.of(2019, 1, 1), LocalDate.of(2019, 1, 31));
-        input.add(nonZeroRatePeriod);
+    public void should_union_zero_contiguous_periods(){
+        LocalDate startDate = LocalDate.of(2019, Month.FEBRUARY, 1);
+        LocalDate endDate = LocalDate.of(2019, Month.MARCH, 28);
 
-        LocalDate startDate = LocalDate.of(2019,2,1);
-        input.add(new Periode(0, startDate, LocalDate.of(2019,2,28)));
+        Period nonZeroRatePeriod = new Period(10, LocalDate.of(2019, Month.JANUARY, 1), LocalDate.of(2019, Month.JANUARY, 31));
+        Period lastNonZeroPeriod = new Period(20, LocalDate.of(2019, 4, 1), LocalDate.of(2019, 4, 30));
+        List<Period> input = Arrays.asList(
+                nonZeroRatePeriod,
+                new Period(0, startDate, LocalDate.of(2019, Month.FEBRUARY, 28)),
+                new Period(0, LocalDate.of(2019, Month.MARCH, 1), endDate),
+                lastNonZeroPeriod
+        );
+        PeriodCalculator calculator = new PeriodCalculator();
 
-        LocalDate endDate= LocalDate.of(2019,3,28);
-        input.add(new Periode(0, LocalDate.of(2019,3,1), endDate));
+        List<Period> output = calculator.mergeContiguousPeriods(input);
 
-        Periode lastNonZeroPeriod = new Periode(20, LocalDate.of(2019, 4, 1), LocalDate.of(2019, 4, 30));
-        input.add(lastNonZeroPeriod);
-        PeriodeCalculator calculator = new PeriodeCalculator();
-
-        List<Periode> output = calculator.MergeContiguousPeriods(input);
-
-        Assertions.assertThat(output.size()).isEqualTo(3);
-        Assertions.assertThat(output.get(0)).isEqualTo(nonZeroRatePeriod);
-        Assertions.assertThat(output.get(1)).isEqualTo(lastNonZeroPeriod);
-        Assertions.assertThat(output.get(2)).isEqualTo(new Periode(0, startDate, endDate));
+        Assertions.assertThat(output).containsExactly(nonZeroRatePeriod, lastNonZeroPeriod, new Period(0, startDate, endDate));
     }
 
     @Test
-    public void Should_union_zero_rate_periods(){
-        List<Periode> input = new ArrayList<Periode>();
-        Periode nonZeroRatePeriod = new Periode(10, LocalDate.of(2019, 1, 1), LocalDate.of(2019, 1, 31));
-        input.add(nonZeroRatePeriod);
-        LocalDate startDate= LocalDate.of(2019,2,1);
-        LocalDate endDate= LocalDate.of(2019,3,28);
-        input.add(new Periode(0, LocalDate.of(2019,3,1), endDate));
-        input.add(new Periode(0, startDate, LocalDate.of(2019,2,28)));
-        PeriodeCalculator calculator = new PeriodeCalculator();
+    public void should_union_zero_rate_periods(){
+        LocalDate startDate = LocalDate.of(2019, Month.FEBRUARY, 1);
+        LocalDate endDate = LocalDate.of(2019, Month.MARCH, 28);
 
-        List<Periode> output = calculator.MergeContiguousPeriods(input);
+        Period nonZeroRatePeriod = new Period(10, LocalDate.of(2019, Month.JANUARY, 1), LocalDate.of(2019, Month.JANUARY, 31));
+        List<Period> input = Arrays.asList(
+                nonZeroRatePeriod,
+                new Period(0, LocalDate.of(2019, Month.MARCH, 1), endDate),
+                new Period(0, startDate, LocalDate.of(2019, Month.FEBRUARY, 28))
+        );
+        PeriodCalculator calculator = new PeriodCalculator();
 
-        Assertions.assertThat(output.size()).isEqualTo(2);
-        Assertions.assertThat(output.contains(nonZeroRatePeriod)).isTrue();
-        Assertions.assertThat(output.contains(new Periode(0, startDate, endDate))).isTrue();
+        List<Period> output = calculator.mergeContiguousPeriods(input);
+
+        Assertions.assertThat(output).containsExactly(nonZeroRatePeriod, new Period(0, startDate, endDate));
     }
 
     @Test
-    public void Should_union_only_first_zero_contiguous_periods(){
-        List<Periode> input = new ArrayList<Periode>();
-        LocalDate startDate = LocalDate.of(2019,2,1);
-        input.add(new Periode(0, startDate, LocalDate.of(2019,2,28)));
+    public void should_union_only_first_zero_contiguous_periods(){
+        LocalDate startDate = LocalDate.of(2019, Month.FEBRUARY, 1);
+        LocalDate endDate = LocalDate.of(2019, Month.MARCH, 28);
 
-        LocalDate endDate= LocalDate.of(2019,3,28);
-        input.add(new Periode(0, LocalDate.of(2019,3,1), endDate));
+        Period nonMergedPeriod = new Period(0, LocalDate.of(2019, Month.MAY, 1), LocalDate.of(2019, Month.MAY, 30));
+        List<Period> input = Arrays.asList(
+                new Period(0, startDate, LocalDate.of(2019, Month.FEBRUARY, 28)),
+                new Period(0, LocalDate.of(2019, Month.MARCH, 1), endDate),
+                nonMergedPeriod
+        );
 
-        Periode nonMergedPeriod = new Periode(0, LocalDate.of(2019, 5, 1), LocalDate.of(2019, 5, 30));
-        input.add(nonMergedPeriod);
-        PeriodeCalculator calculator = new PeriodeCalculator();
+        PeriodCalculator calculator = new PeriodCalculator();
 
-        List<Periode> output = calculator.MergeContiguousPeriods(input);
+        List<Period> output = calculator.mergeContiguousPeriods(input);
 
-        Assertions.assertThat(output.size()).isEqualTo(2);
-        Assertions.assertThat(output.contains(new Periode(0, startDate, endDate))).isTrue();
-        Assertions.assertThat(output.contains(nonMergedPeriod)).isTrue();
+        Assertions.assertThat(output).containsExactly(new Period(0, startDate, endDate), nonMergedPeriod);
     }
 
     @Test
-    public void Should_union_only_lastest_zero_contiguous_periods(){
-        List<Periode> input = new ArrayList<Periode>();
-        Periode nonMergedPeriod = new Periode(0, LocalDate.of(2019,2,1), LocalDate.of(2019,2,28));
-        input.add(nonMergedPeriod);
+    public void should_union_only_lastest_zero_contiguous_periods(){
+        LocalDate startDate = LocalDate.of(2019, Month.APRIL, 1);
+        LocalDate endDate = LocalDate.of(2019, Month.MAY, 30);
 
-        LocalDate startDate = LocalDate.of(2019,4,1);
-        input.add(new Periode(0, startDate, LocalDate.of(2019,4,30)));
+        Period nonMergedPeriod = new Period(0, LocalDate.of(2019, Month.FEBRUARY, 1), LocalDate.of(2019, Month.FEBRUARY, 28));
+        List<Period> input = Arrays.asList(
+                nonMergedPeriod,
+                new Period(0, startDate, LocalDate.of(2019, Month.APRIL, 30)),
+                new Period(0, LocalDate.of(2019, Month.MAY, 1), endDate)
+        );
+        PeriodCalculator calculator = new PeriodCalculator();
 
-        LocalDate endDate = LocalDate.of(2019, 5, 30);
-        input.add(new Periode(0, LocalDate.of(2019, 5, 1), endDate));
-        PeriodeCalculator calculator = new PeriodeCalculator();
+        List<Period> output = calculator.mergeContiguousPeriods(input);
 
-        List<Periode> output = calculator.MergeContiguousPeriods(input);
-
-        Assertions.assertThat(output.size()).isEqualTo(2);
-        Assertions.assertThat(output.contains(new Periode(0, startDate, endDate))).isTrue();
-        Assertions.assertThat(output.contains(nonMergedPeriod)).isTrue();
+        Assertions.assertThat(output).containsExactly(nonMergedPeriod, new Period(0, startDate, endDate));
     }
 }
