@@ -1,7 +1,7 @@
 import java.time.LocalDate;
 import java.util.Objects;
 
-public final class Periode {
+public final class Periode implements Comparable<Periode> {
     private final int rate;
     private final LocalDate startDate;
     private final LocalDate endDate;
@@ -35,11 +35,12 @@ public final class Periode {
         return new Periode(this.rate, this.startDate, other.endDate);
     }
 
-    boolean before(Periode other) {
-        return this.startDate.isBefore(other.startDate);
-    }
-
     boolean isContiguousTo(Periode other) {
         return this.endDate.plusDays(1).isEqual(other.startDate);
+    }
+
+    @Override
+    public int compareTo(Periode other) {
+        return this.startDate.compareTo(other.startDate);
     }
 }
