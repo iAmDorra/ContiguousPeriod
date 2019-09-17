@@ -1,4 +1,5 @@
-import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -19,19 +20,14 @@ class PeriodCalculator {
     }
 
     private Stream<Period> mergeZeroRateContiguousPeriods(List<Period> zeroRatePeriods) {
-        List<Period> mergedPeriods = new ArrayList<>();
-        mergedPeriods.add(zeroRatePeriods.get(0));
-        int mergedPeriodIndex = 0;
-        for (int periodIndex = 1; periodIndex < zeroRatePeriods.size(); periodIndex++) {
-            Period currentPeriod = zeroRatePeriods.get(periodIndex);
-            if (mergedPeriods.get(mergedPeriodIndex).isContiguousTo(currentPeriod)) {
-                Period mergedPeriod =  mergedPeriods.get(mergedPeriodIndex).merge(currentPeriod);
-                mergedPeriods.remove(mergedPeriodIndex);
-                mergedPeriods.add(mergedPeriod);
-            }
-            else {
-                mergedPeriods.add(currentPeriod);
-                mergedPeriodIndex++;
+        Deque<Period> mergedPeriods = new LinkedList<>();
+        for (Period currentPeriod : zeroRatePeriods) {
+            if (!mergedPeriods.isEmpty() && mergedPeriods.getLast().isContiguousTo(currentPeriod)) {
+                Period last = mergedPeriods.removeLast();
+                Period mergedPeriod = last.merge(currentPeriod);
+                mergedPeriods.addLast(mergedPeriod);
+            } else {
+                mergedPeriods.addLast(currentPeriod);
             }
         }
 
