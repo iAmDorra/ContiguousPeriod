@@ -3,29 +3,29 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-class PeriodeCalculator {
+class PeriodCalculator {
 
-    List<Periode> mergeContiguousPeriods(List<Periode> periodes) {
-        if(periodes.size()> 1) {
-            List<Periode> zeroPeriods = periodes.stream()
+    List<Period> mergeContiguousPeriods(List<Period> periods) {
+        if(periods.size()> 1) {
+            List<Period> zeroPeriods = periods.stream()
                     .filter(p1 -> p1.getRate() == 0)
                     .sorted()
                     .collect(Collectors.toList());
-            Stream<Periode> mergedPeriods = mergeZeroRateContiguousPeriods(zeroPeriods);
-            Stream<Periode> nonZeroRatePeriods = periodes.stream().filter(p -> p.getRate() != 0);
+            Stream<Period> mergedPeriods = mergeZeroRateContiguousPeriods(zeroPeriods);
+            Stream<Period> nonZeroRatePeriods = periods.stream().filter(p -> p.getRate() != 0);
             return Stream.concat(nonZeroRatePeriods, mergedPeriods).collect(Collectors.toList());
         }
-        return periodes;
+        return periods;
     }
 
-    private Stream<Periode> mergeZeroRateContiguousPeriods(List<Periode> zeroRatePeriods) {
-        List<Periode> mergedPeriods = new ArrayList<>();
+    private Stream<Period> mergeZeroRateContiguousPeriods(List<Period> zeroRatePeriods) {
+        List<Period> mergedPeriods = new ArrayList<>();
         mergedPeriods.add(zeroRatePeriods.get(0));
         int mergedPeriodIndex = 0;
         for (int periodIndex = 1; periodIndex < zeroRatePeriods.size(); periodIndex++) {
-            Periode currentPeriod = zeroRatePeriods.get(periodIndex);
+            Period currentPeriod = zeroRatePeriods.get(periodIndex);
             if (mergedPeriods.get(mergedPeriodIndex).isContiguousTo(currentPeriod)) {
-                Periode mergedPeriod =  mergedPeriods.get(mergedPeriodIndex).merge(currentPeriod);
+                Period mergedPeriod =  mergedPeriods.get(mergedPeriodIndex).merge(currentPeriod);
                 mergedPeriods.remove(mergedPeriodIndex);
                 mergedPeriods.add(mergedPeriod);
             }
