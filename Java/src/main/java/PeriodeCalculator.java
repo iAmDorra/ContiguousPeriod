@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class PeriodeCalculator {
-    public List<Periode> MergeContiguousPeriods(List<Periode> periodes) {
+class PeriodeCalculator {
+    List<Periode> MergeContiguousPeriods(List<Periode> periodes) {
         if(periodes.size()> 1) {
             Stream<Periode> zeroPeriods = periodes.stream()
                     .filter(p1 -> p1.getRate() == 0)

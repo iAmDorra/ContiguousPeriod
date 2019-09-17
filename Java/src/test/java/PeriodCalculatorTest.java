@@ -9,7 +9,7 @@ public class PeriodCalculatorTest {
     @Test
     public void should_return_the_same_period_when_having_no_one()
     {
-        List<Periode> input = new ArrayList<Periode>();
+        List<Periode> input = new ArrayList<>();
         PeriodeCalculator calculator = new PeriodeCalculator();
 
         List<Periode> output = calculator.MergeContiguousPeriods(input);
@@ -20,7 +20,7 @@ public class PeriodCalculatorTest {
     @Test
     public void should_return_one_period_when_having_two_zero_rate_contiguous_periods()
     {
-        List<Periode> input = new ArrayList<Periode>();
+        List<Periode> input = new ArrayList<>();
         input.add(new Periode(0, LocalDate.of(2019,1,1), LocalDate.of(2019,1,2)));
         input.add(new Periode(0, LocalDate.of(2019,1,3), LocalDate.of(2019,1,4)));
         PeriodeCalculator calculator = new PeriodeCalculator();
@@ -34,7 +34,7 @@ public class PeriodCalculatorTest {
     @Test
     public void should_merge_periods_when_having_two_zero_rate_contiguous_periods()
     {
-        List<Periode> input = new ArrayList<Periode>();
+        List<Periode> input = new ArrayList<>();
         LocalDate startDate= LocalDate.of(2019,1,1);
         input.add(new Periode(
                 0,
@@ -55,7 +55,7 @@ public class PeriodCalculatorTest {
 
     @Test
     public void Should_union_only_zero_period(){
-        List<Periode> input = new ArrayList<Periode>();
+        List<Periode> input = new ArrayList<>();
         Periode nonZeroRatePeriod = new Periode(10, LocalDate.of(2019, 1, 1), LocalDate.of(2019, 1, 31));
         input.add(nonZeroRatePeriod);
         LocalDate startDate= LocalDate.of(2019,2,1);
@@ -73,7 +73,7 @@ public class PeriodCalculatorTest {
 
     @Test
     public void Should_union_zero_periods(){
-        List<Periode> input = new ArrayList<Periode>();
+        List<Periode> input = new ArrayList<>();
         Periode nonZeroRatePeriod = new Periode(10, LocalDate.of(2019, 1, 1), LocalDate.of(2019, 1, 31));
         input.add(nonZeroRatePeriod);
 
@@ -97,7 +97,7 @@ public class PeriodCalculatorTest {
 
     @Test
     public void Should_union_zero_contiguous_periods(){
-        List<Periode> input = new ArrayList<Periode>();
+        List<Periode> input = new ArrayList<>();
         Periode nonZeroRatePeriod = new Periode(10, LocalDate.of(2019, 1, 1), LocalDate.of(2019, 1, 31));
         input.add(nonZeroRatePeriod);
 
@@ -121,7 +121,7 @@ public class PeriodCalculatorTest {
 
     @Test
     public void Should_union_zero_rate_periods(){
-        List<Periode> input = new ArrayList<Periode>();
+        List<Periode> input = new ArrayList<>();
         Periode nonZeroRatePeriod = new Periode(10, LocalDate.of(2019, 1, 1), LocalDate.of(2019, 1, 31));
         input.add(nonZeroRatePeriod);
         LocalDate startDate= LocalDate.of(2019,2,1);
@@ -139,7 +139,7 @@ public class PeriodCalculatorTest {
 
     @Test
     public void Should_union_only_first_zero_contiguous_periods(){
-        List<Periode> input = new ArrayList<Periode>();
+        List<Periode> input = new ArrayList<>();
         LocalDate startDate = LocalDate.of(2019,2,1);
         input.add(new Periode(0, startDate, LocalDate.of(2019,2,28)));
 
@@ -159,7 +159,7 @@ public class PeriodCalculatorTest {
 
     @Test
     public void Should_union_only_lastest_zero_contiguous_periods(){
-        List<Periode> input = new ArrayList<Periode>();
+        List<Periode> input = new ArrayList<>();
         Periode nonMergedPeriod = new Periode(0, LocalDate.of(2019,2,1), LocalDate.of(2019,2,28));
         input.add(nonMergedPeriod);
 

@@ -1,12 +1,12 @@
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Periode {
-    private int rate;
-    private LocalDate startDate;
-    private LocalDate endDate;
+public final class Periode {
+    private final int rate;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
 
-    public Periode(int rate, LocalDate startDate, LocalDate endDate) {
+    Periode(int rate, LocalDate startDate, LocalDate endDate) {
         this.rate = rate;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -27,19 +27,19 @@ public class Periode {
         return Objects.hash(rate, startDate, endDate);
     }
 
-    public int getRate() {
+    int getRate() {
         return rate;
     }
 
-    public Periode merge(Periode other) {
+    Periode merge(Periode other) {
         return new Periode(this.rate, this.startDate, other.endDate);
     }
 
-    public boolean before(Periode other) {
+    boolean before(Periode other) {
         return this.startDate.isBefore(other.startDate);
     }
 
-    public boolean isContiguousTo(Periode other) {
+    boolean isContiguousTo(Periode other) {
         return this.endDate.plusDays(1).isEqual(other.startDate);
     }
 }
