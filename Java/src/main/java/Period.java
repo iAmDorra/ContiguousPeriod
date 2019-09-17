@@ -43,4 +43,13 @@ public final class Period implements Comparable<Period> {
     public int compareTo(Period other) {
         return this.startDate.compareTo(other.startDate);
     }
+
+    @Override
+    public String toString() {
+        return "Period{" +
+                "rate=" + rate +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
+    }
 }
