@@ -1,6 +1,6 @@
 package contiguous.period;
+
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -10,16 +10,12 @@ public class PeriodCalculator {
         if (periods.size() > 1) {
             Stream<Period> zeroPeriods = periods.stream()
                     .filter(Period::isRateIsZero)
-                    .sorted(getPeriodeComparator());
+                    .sorted(Period::compareTo);
             Stream<Period> mergedPeriods = mergeZeroRateContiguousPeriods(zeroPeriods);
             Stream<Period> nonZeroRatePeriods = periods.stream().filter(Period::isRateIsNotZero);
             return Stream.concat(nonZeroRatePeriods, mergedPeriods).collect(Collectors.toList());
         }
         return periods;
-    }
-
-    private Comparator<Period> getPeriodeComparator() {
-        return (Period p1, Period p2) -> p1.before(p2) ? -1 : 1;
     }
 
     private Stream<Period> mergeZeroRateContiguousPeriods(Stream<Period> zeroPeriods) {

@@ -2,7 +2,7 @@ package contiguous.period;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Period {
+public class Period implements Comparable<Period> {
     private int rate;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -44,8 +44,9 @@ public class Period {
         return new Period(this.rate, this.startDate, other.endDate);
     }
 
-    public boolean before(Period other) {
-        return this.startDate.isBefore(other.startDate);
+    @Override
+    public int compareTo(Period other) {
+        return this.startDate.compareTo(other.startDate);
     }
 
     public boolean isContiguousTo(Period other) {
