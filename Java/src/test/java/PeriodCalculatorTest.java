@@ -6,7 +6,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Collections.emptyList;
+
 public class PeriodCalculatorTest {
+
+    private static final List<Period> NO_PERIOD = emptyList();
 
     private PeriodCalculator calculator;
 
@@ -18,7 +22,7 @@ public class PeriodCalculatorTest {
     @Test
     public void should_return_the_same_period_when_having_no_one()
     {
-        List<Period> input = new ArrayList<Period>();
+        List<Period> input = NO_PERIOD;
 
         List<Period> output = calculator.MergeContiguousPeriods(input);
 
