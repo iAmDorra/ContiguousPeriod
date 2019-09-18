@@ -34,8 +34,12 @@ public class PeriodCalculatorTest {
     @Test
     public void should_return_one_period_when_having_two_zero_rate_contiguous_periods() {
         List<Period> input = new ArrayList<Period>();
-        input.add(new Period(0, LocalDate.of(2019, Month.JANUARY, 1), LocalDate.of(2019, Month.JANUARY, 2)));
-        input.add(new Period(0, LocalDate.of(2019, Month.JANUARY, 3), LocalDate.of(2019, Month.JANUARY, 4)));
+        input.add(new Period(0,
+                LocalDate.of(2019, Month.JANUARY, 1),
+                LocalDate.of(2019, Month.JANUARY, 2)));
+        input.add(new Period(0,
+                LocalDate.of(2019, Month.JANUARY, 3),
+                LocalDate.of(2019, Month.JANUARY, 4)));
 
         List<Period> output = calculator.mergeContiguousPeriods(input);
 
@@ -66,13 +70,21 @@ public class PeriodCalculatorTest {
     @Test
     public void Should_union_only_zero_period() {
         List<Period> input = new ArrayList<Period>();
-        Period nonZeroRatePeriod = new Period(10, LocalDate.of(2019, Month.JANUARY, 1), LocalDate
-                .of(2019, Month.JANUARY, 31));
+        Period nonZeroRatePeriod = new Period(
+                10,
+                LocalDate.of(2019, Month.JANUARY, 1),
+                LocalDate.of(2019, Month.JANUARY, 31));
         input.add(nonZeroRatePeriod);
         LocalDate startDate = LocalDate.of(2019, Month.FEBRUARY, 1);
-        input.add(new Period(0, startDate, LocalDate.of(2019, Month.FEBRUARY, 28)));
+        input.add(new Period(
+                0,
+                startDate,
+                LocalDate.of(2019, Month.FEBRUARY, 28)));
         LocalDate endDate = LocalDate.of(2019, Month.MARCH, 28);
-        input.add(new Period(0, LocalDate.of(2019, Month.MARCH, 1), endDate));
+        input.add(new Period(
+                0,
+                LocalDate.of(2019, Month.MARCH, 1),
+                endDate));
 
         List<Period> output = calculator.mergeContiguousPeriods(input);
 
@@ -84,18 +96,28 @@ public class PeriodCalculatorTest {
     @Test
     public void Should_union_zero_periods() {
         List<Period> input = new ArrayList<Period>();
-        Period nonZeroRatePeriod = new Period(10, LocalDate.of(2019, Month.JANUARY, 1), LocalDate
-                .of(2019, Month.JANUARY, 31));
+        Period nonZeroRatePeriod = new Period(
+                10,
+                LocalDate.of(2019, Month.JANUARY, 1),
+                LocalDate.of(2019, Month.JANUARY, 31));
         input.add(nonZeroRatePeriod);
 
         LocalDate startDate = LocalDate.of(2019, Month.FEBRUARY, 1);
-        input.add(new Period(0, startDate, LocalDate.of(2019, Month.FEBRUARY, 28)));
+        input.add(new Period(
+                0,
+                startDate,
+                LocalDate.of(2019, Month.FEBRUARY, 28)));
 
         LocalDate endDate = LocalDate.of(2019, Month.MARCH, 28);
-        input.add(new Period(0, LocalDate.of(2019, Month.MARCH, 1), endDate));
+        input.add(new Period(
+                0,
+                LocalDate.of(2019, Month.MARCH, 1),
+                endDate));
 
-        Period lastNonZeroPeriod = new Period(20, LocalDate.of(2019, Month.APRIL, 1), LocalDate
-                .of(2019, Month.APRIL, 30));
+        Period lastNonZeroPeriod = new Period(
+                20,
+                LocalDate.of(2019, Month.APRIL, 1),
+                LocalDate.of(2019, Month.APRIL, 30));
         input.add(lastNonZeroPeriod);
 
         List<Period> output = calculator.mergeContiguousPeriods(input);
@@ -109,18 +131,28 @@ public class PeriodCalculatorTest {
     @Test
     public void Should_union_zero_contiguous_periods() {
         List<Period> input = new ArrayList<Period>();
-        Period nonZeroRatePeriod = new Period(10, LocalDate.of(2019, Month.JANUARY, 1), LocalDate
-                .of(2019, Month.JANUARY, 31));
+        Period nonZeroRatePeriod = new Period(
+                10,
+                LocalDate.of(2019, Month.JANUARY, 1),
+                LocalDate.of(2019, Month.JANUARY, 31));
         input.add(nonZeroRatePeriod);
 
         LocalDate startDate = LocalDate.of(2019, Month.FEBRUARY, 1);
-        input.add(new Period(0, startDate, LocalDate.of(2019, Month.FEBRUARY, 28)));
+        input.add(new Period(
+                0,
+                startDate,
+                LocalDate.of(2019, Month.FEBRUARY, 28)));
 
         LocalDate endDate = LocalDate.of(2019, Month.MARCH, 28);
-        input.add(new Period(0, LocalDate.of(2019, Month.MARCH, 1), endDate));
+        input.add(new Period(
+                0,
+                LocalDate.of(2019, Month.MARCH, 1),
+                endDate));
 
-        Period lastNonZeroPeriod = new Period(20, LocalDate.of(2019, Month.APRIL, 1), LocalDate
-                .of(2019, Month.APRIL, 30));
+        Period lastNonZeroPeriod = new Period(
+                20,
+                LocalDate.of(2019, Month.APRIL, 1),
+                LocalDate.of(2019, Month.APRIL, 30));
         input.add(lastNonZeroPeriod);
 
         List<Period> output = calculator.mergeContiguousPeriods(input);
@@ -134,13 +166,21 @@ public class PeriodCalculatorTest {
     @Test
     public void Should_union_zero_rate_periods() {
         List<Period> input = new ArrayList<Period>();
-        Period nonZeroRatePeriod = new Period(10, LocalDate.of(2019, Month.JANUARY, 1), LocalDate
-                .of(2019, Month.JANUARY, 31));
+        Period nonZeroRatePeriod = new Period(
+                10,
+                LocalDate.of(2019, Month.JANUARY, 1),
+                LocalDate.of(2019, Month.JANUARY, 31));
         input.add(nonZeroRatePeriod);
         LocalDate startDate = LocalDate.of(2019, Month.FEBRUARY, 1);
         LocalDate endDate = LocalDate.of(2019, Month.MARCH, 28);
-        input.add(new Period(0, LocalDate.of(2019, Month.MARCH, 1), endDate));
-        input.add(new Period(0, startDate, LocalDate.of(2019, Month.FEBRUARY, 28)));
+        input.add(new Period(
+                0,
+                LocalDate.of(2019, Month.MARCH, 1),
+                endDate));
+        input.add(new Period(
+                0,
+                startDate,
+                LocalDate.of(2019, Month.FEBRUARY, 28)));
 
         List<Period> output = calculator.mergeContiguousPeriods(input);
 
@@ -153,12 +193,21 @@ public class PeriodCalculatorTest {
     public void Should_union_only_first_zero_contiguous_periods() {
         List<Period> input = new ArrayList<Period>();
         LocalDate startDate = LocalDate.of(2019, Month.FEBRUARY, 1);
-        input.add(new Period(0, startDate, LocalDate.of(2019, 2, 28)));
+        input.add(new Period(
+                0,
+                startDate,
+                LocalDate.of(2019, 2, 28)));
 
         LocalDate endDate = LocalDate.of(2019, Month.MARCH, 28);
-        input.add(new Period(0, LocalDate.of(2019, Month.MARCH, 1), endDate));
+        input.add(new Period(
+                0,
+                LocalDate.of(2019, Month.MARCH, 1),
+                endDate));
 
-        Period nonMergedPeriod = new Period(0, LocalDate.of(2019, Month.MAY, 1), LocalDate.of(2019, Month.MAY, 30));
+        Period nonMergedPeriod = new Period(
+                0,
+                LocalDate.of(2019, Month.MAY, 1),
+                LocalDate.of(2019, Month.MAY, 30));
         input.add(nonMergedPeriod);
 
         List<Period> output = calculator.mergeContiguousPeriods(input);
@@ -171,15 +220,23 @@ public class PeriodCalculatorTest {
     @Test
     public void Should_union_only_lastest_zero_contiguous_periods() {
         List<Period> input = new ArrayList<Period>();
-        Period nonMergedPeriod = new Period(0, LocalDate.of(2019, Month.FEBRUARY, 1), LocalDate
-                .of(2019, Month.FEBRUARY, 28));
+        Period nonMergedPeriod = new Period(
+                0,
+                LocalDate.of(2019, Month.FEBRUARY, 1),
+                LocalDate.of(2019, Month.FEBRUARY, 28));
         input.add(nonMergedPeriod);
 
         LocalDate startDate = LocalDate.of(2019, Month.APRIL, 1);
-        input.add(new Period(0, startDate, LocalDate.of(2019, Month.APRIL, 30)));
+        input.add(new Period(
+                0,
+                startDate,
+                LocalDate.of(2019, Month.APRIL, 30)));
 
         LocalDate endDate = LocalDate.of(2019, Month.MAY, 30);
-        input.add(new Period(0, LocalDate.of(2019, Month.MAY, 1), endDate));
+        input.add(new Period(
+                0,
+                LocalDate.of(2019, Month.MAY, 1),
+                endDate));
 
         List<Period> output = calculator.mergeContiguousPeriods(input);
 
