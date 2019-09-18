@@ -1,4 +1,3 @@
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class PeriodCalculatorTest {
 
@@ -26,7 +26,7 @@ public class PeriodCalculatorTest {
 
         List<Period> output = calculator.mergeContiguousPeriods(input);
 
-        Assertions.assertThat(output.isEmpty()).isEqualTo(true);
+        assertThat(output.isEmpty()).isEqualTo(true);
     }
 
     @Test
@@ -38,8 +38,8 @@ public class PeriodCalculatorTest {
 
         List<Period> output = calculator.mergeContiguousPeriods(input);
 
-        Assertions.assertThat(output.size()).isEqualTo(1);
-        Assertions.assertThat(output.get(0).getRate()).isEqualTo(0);
+        assertThat(output.size()).isEqualTo(1);
+        assertThat(output.get(0).getRate()).isEqualTo(0);
     }
 
     @Test
@@ -60,8 +60,8 @@ public class PeriodCalculatorTest {
 
         List<Period> output = calculator.mergeContiguousPeriods(input);
 
-        Assertions.assertThat(output.size()).isEqualTo(1);
-        Assertions.assertThat(output.get(0)).isEqualTo(new Period(0, startDate, endDate));
+        assertThat(output.size()).isEqualTo(1);
+        assertThat(output.get(0)).isEqualTo(new Period(0, startDate, endDate));
     }
 
     @Test
@@ -77,9 +77,9 @@ public class PeriodCalculatorTest {
 
         List<Period> output = calculator.mergeContiguousPeriods(input);
 
-        Assertions.assertThat(output.size()).isEqualTo(2);
-        Assertions.assertThat(output.get(0)).isEqualTo(nonZeroRatePeriod);
-        Assertions.assertThat(output.get(1)).isEqualTo(new Period(0, startDate, endDate));
+        assertThat(output.size()).isEqualTo(2);
+        assertThat(output.get(0)).isEqualTo(nonZeroRatePeriod);
+        assertThat(output.get(1)).isEqualTo(new Period(0, startDate, endDate));
     }
 
     @Test
@@ -99,10 +99,10 @@ public class PeriodCalculatorTest {
 
         List<Period> output = calculator.mergeContiguousPeriods(input);
 
-        Assertions.assertThat(output.size()).isEqualTo(3);
-        Assertions.assertThat(output.get(0)).isEqualTo(nonZeroRatePeriod);
-        Assertions.assertThat(output.get(1)).isEqualTo(lastNonZeroPeriod);
-        Assertions.assertThat(output.get(2)).isEqualTo(new Period(0, startDate, endDate));
+        assertThat(output.size()).isEqualTo(3);
+        assertThat(output.get(0)).isEqualTo(nonZeroRatePeriod);
+        assertThat(output.get(1)).isEqualTo(lastNonZeroPeriod);
+        assertThat(output.get(2)).isEqualTo(new Period(0, startDate, endDate));
     }
 
     @Test
@@ -122,10 +122,10 @@ public class PeriodCalculatorTest {
 
         List<Period> output = calculator.mergeContiguousPeriods(input);
 
-        Assertions.assertThat(output.size()).isEqualTo(3);
-        Assertions.assertThat(output.get(0)).isEqualTo(nonZeroRatePeriod);
-        Assertions.assertThat(output.get(1)).isEqualTo(lastNonZeroPeriod);
-        Assertions.assertThat(output.get(2)).isEqualTo(new Period(0, startDate, endDate));
+        assertThat(output.size()).isEqualTo(3);
+        assertThat(output.get(0)).isEqualTo(nonZeroRatePeriod);
+        assertThat(output.get(1)).isEqualTo(lastNonZeroPeriod);
+        assertThat(output.get(2)).isEqualTo(new Period(0, startDate, endDate));
     }
 
     @Test
@@ -140,9 +140,9 @@ public class PeriodCalculatorTest {
 
         List<Period> output = calculator.mergeContiguousPeriods(input);
 
-        Assertions.assertThat(output.size()).isEqualTo(2);
-        Assertions.assertThat(output.contains(nonZeroRatePeriod)).isTrue();
-        Assertions.assertThat(output.contains(new Period(0, startDate, endDate))).isTrue();
+        assertThat(output.size()).isEqualTo(2);
+        assertThat(output.contains(nonZeroRatePeriod)).isTrue();
+        assertThat(output.contains(new Period(0, startDate, endDate))).isTrue();
     }
 
     @Test
@@ -159,9 +159,9 @@ public class PeriodCalculatorTest {
 
         List<Period> output = calculator.mergeContiguousPeriods(input);
 
-        Assertions.assertThat(output.size()).isEqualTo(2);
-        Assertions.assertThat(output.contains(new Period(0, startDate, endDate))).isTrue();
-        Assertions.assertThat(output.contains(nonMergedPeriod)).isTrue();
+        assertThat(output.size()).isEqualTo(2);
+        assertThat(output.contains(new Period(0, startDate, endDate))).isTrue();
+        assertThat(output.contains(nonMergedPeriod)).isTrue();
     }
 
     @Test
@@ -178,8 +178,8 @@ public class PeriodCalculatorTest {
 
         List<Period> output = calculator.mergeContiguousPeriods(input);
 
-        Assertions.assertThat(output.size()).isEqualTo(2);
-        Assertions.assertThat(output.contains(new Period(0, startDate, endDate))).isTrue();
-        Assertions.assertThat(output.contains(nonMergedPeriod)).isTrue();
+        assertThat(output.size()).isEqualTo(2);
+        assertThat(output.contains(new Period(0, startDate, endDate))).isTrue();
+        assertThat(output.contains(nonMergedPeriod)).isTrue();
     }
 }
