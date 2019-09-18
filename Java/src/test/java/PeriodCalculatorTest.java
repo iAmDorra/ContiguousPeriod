@@ -8,11 +8,11 @@ import java.util.List;
 
 public class PeriodCalculatorTest {
 
-    private PeriodeCalculator calculator;
+    private PeriodCalculator calculator;
 
     @Before
     public void setUp() throws Exception {
-        calculator = new PeriodeCalculator();
+        calculator = new PeriodCalculator();
     }
 
     @Test
@@ -52,7 +52,7 @@ public class PeriodCalculatorTest {
                 0,
                 LocalDate.of(2019,2,1),
                 endDate));
-        PeriodeCalculator calculator = new PeriodeCalculator();
+        PeriodCalculator calculator = new PeriodCalculator();
 
         List<Period> output = calculator.MergeContiguousPeriods(input);
 
@@ -69,7 +69,7 @@ public class PeriodCalculatorTest {
         input.add(new Period(0, startDate, LocalDate.of(2019, 2, 28)));
         LocalDate endDate= LocalDate.of(2019,3,28);
         input.add(new Period(0, LocalDate.of(2019, 3, 1), endDate));
-        PeriodeCalculator calculator = new PeriodeCalculator();
+        PeriodCalculator calculator = new PeriodCalculator();
 
         List<Period> output = calculator.MergeContiguousPeriods(input);
 
