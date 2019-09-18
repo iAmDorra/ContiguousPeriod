@@ -1,4 +1,5 @@
 import org.assertj.core.api.Assertions;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -6,11 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PeriodCalculatorTest {
+
+    private PeriodeCalculator calculator;
+
+    @Before
+    public void setUp() throws Exception {
+        calculator = new PeriodeCalculator();
+    }
+
     @Test
     public void should_return_the_same_period_when_having_no_one()
     {
         List<Periode> input = new ArrayList<Periode>();
-        PeriodeCalculator calculator = new PeriodeCalculator();
 
         List<Periode> output = calculator.MergeContiguousPeriods(input);
 
@@ -23,7 +31,6 @@ public class PeriodCalculatorTest {
         List<Periode> input = new ArrayList<Periode>();
         input.add(new Periode(0, LocalDate.of(2019,1,1), LocalDate.of(2019,1,2)));
         input.add(new Periode(0, LocalDate.of(2019,1,3), LocalDate.of(2019,1,4)));
-        PeriodeCalculator calculator = new PeriodeCalculator();
 
         List<Periode> output = calculator.MergeContiguousPeriods(input);
 
@@ -85,7 +92,6 @@ public class PeriodCalculatorTest {
 
         Periode lastNonZeroPeriod = new Periode(20, LocalDate.of(2019, 4, 1), LocalDate.of(2019, 4, 30));
         input.add(lastNonZeroPeriod);
-        PeriodeCalculator calculator = new PeriodeCalculator();
 
         List<Periode> output = calculator.MergeContiguousPeriods(input);
 
@@ -109,7 +115,6 @@ public class PeriodCalculatorTest {
 
         Periode lastNonZeroPeriod = new Periode(20, LocalDate.of(2019, 4, 1), LocalDate.of(2019, 4, 30));
         input.add(lastNonZeroPeriod);
-        PeriodeCalculator calculator = new PeriodeCalculator();
 
         List<Periode> output = calculator.MergeContiguousPeriods(input);
 
@@ -128,7 +133,6 @@ public class PeriodCalculatorTest {
         LocalDate endDate= LocalDate.of(2019,3,28);
         input.add(new Periode(0, LocalDate.of(2019,3,1), endDate));
         input.add(new Periode(0, startDate, LocalDate.of(2019,2,28)));
-        PeriodeCalculator calculator = new PeriodeCalculator();
 
         List<Periode> output = calculator.MergeContiguousPeriods(input);
 
@@ -148,7 +152,6 @@ public class PeriodCalculatorTest {
 
         Periode nonMergedPeriod = new Periode(0, LocalDate.of(2019, 5, 1), LocalDate.of(2019, 5, 30));
         input.add(nonMergedPeriod);
-        PeriodeCalculator calculator = new PeriodeCalculator();
 
         List<Periode> output = calculator.MergeContiguousPeriods(input);
 
@@ -168,7 +171,6 @@ public class PeriodCalculatorTest {
 
         LocalDate endDate = LocalDate.of(2019, 5, 30);
         input.add(new Periode(0, LocalDate.of(2019, 5, 1), endDate));
-        PeriodeCalculator calculator = new PeriodeCalculator();
 
         List<Periode> output = calculator.MergeContiguousPeriods(input);
 
