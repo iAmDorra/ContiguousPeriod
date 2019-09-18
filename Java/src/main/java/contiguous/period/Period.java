@@ -32,6 +32,10 @@ public class Period {
         return rate;
     }
 
+    public boolean isRateIsNotZero() {
+        return rate != 0;
+    }
+
     public boolean isRateIsZero() {
         return rate == 0;
     }
