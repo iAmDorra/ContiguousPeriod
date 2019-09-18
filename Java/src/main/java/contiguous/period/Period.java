@@ -1,3 +1,4 @@
+package contiguous.period;
 import java.time.LocalDate;
 import java.util.Objects;
 

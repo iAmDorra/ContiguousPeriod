@@ -1,3 +1,4 @@
+package contiguous.period;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,8 +21,7 @@ public class PeriodCalculatorTest {
     }
 
     @Test
-    public void should_return_the_same_period_when_having_no_one()
-    {
+    public void should_return_the_same_period_when_having_no_one() {
         List<Period> input = NO_PERIOD;
 
         List<Period> output = calculator.mergeContiguousPeriods(input);
@@ -30,8 +30,7 @@ public class PeriodCalculatorTest {
     }
 
     @Test
-    public void should_return_one_period_when_having_two_zero_rate_contiguous_periods()
-    {
+    public void should_return_one_period_when_having_two_zero_rate_contiguous_periods() {
         List<Period> input = new ArrayList<Period>();
         input.add(new Period(0, LocalDate.of(2019, 1, 1), LocalDate.of(2019, 1, 2)));
         input.add(new Period(0, LocalDate.of(2019, 1, 3), LocalDate.of(2019, 1, 4)));
@@ -43,8 +42,7 @@ public class PeriodCalculatorTest {
     }
 
     @Test
-    public void should_merge_periods_when_having_two_zero_rate_contiguous_periods()
-    {
+    public void should_merge_periods_when_having_two_zero_rate_contiguous_periods() {
         List<Period> input = new ArrayList<Period>();
         LocalDate startDate= LocalDate.of(2019,1,1);
         input.add(new Period(

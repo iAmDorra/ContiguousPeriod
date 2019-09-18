@@ -1,3 +1,4 @@
+package contiguous.period;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -31,8 +32,7 @@ public class PeriodCalculator {
                 Period mergedPeriod = mergedPeriods.get(mergedPeriodIndex).merge(zeroRatePeriods[periodIndex]);
                 mergedPeriods.remove(mergedPeriodIndex);
                 mergedPeriods.add(mergedPeriod);
-            }
-            else {
+            } else {
                 mergedPeriods.add(zeroRatePeriods[periodIndex]);
                 mergedPeriodIndex++;
             }
