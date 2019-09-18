@@ -9,7 +9,7 @@ public class PeriodCalculator {
     public List<Period> mergeContiguousPeriods(List<Period> periods) {
         if (periods.size() > 1) {
             Stream<Period> zeroPeriods = periods.stream()
-                    .filter(p1 -> p1.getRate() == 0)
+                    .filter(Period::isRateIsZero)
                     .sorted(getPeriodeComparator());
             Stream<Period> mergedPeriods = mergeZeroRateContiguousPeriods(zeroPeriods);
             Stream<Period> nonZeroRatePeriods = periods.stream().filter(p -> p.getRate() != 0);

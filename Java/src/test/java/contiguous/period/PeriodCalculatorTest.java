@@ -43,7 +43,7 @@ public class PeriodCalculatorTest {
         List<Period> output = calculator.mergeContiguousPeriods(input);
 
         assertThat(output).hasSize(1);
-        assertThat(output).allMatch(period -> period.getRate() == 0);
+        assertThat(output).allMatch(Period::isRateIsZero);
     }
 
     @Test

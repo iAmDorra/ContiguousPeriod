@@ -32,6 +32,10 @@ public class Period {
         return rate;
     }
 
+    public boolean isRateIsZero() {
+        return rate == 0;
+    }
+
     public Period merge(Period other) {
         return new Period(this.rate, this.startDate, other.endDate);
     }
