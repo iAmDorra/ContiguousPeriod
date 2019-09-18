@@ -24,7 +24,7 @@ public class PeriodCalculatorTest {
     {
         List<Period> input = NO_PERIOD;
 
-        List<Period> output = calculator.MergeContiguousPeriods(input);
+        List<Period> output = calculator.mergeContiguousPeriods(input);
 
         Assertions.assertThat(output.isEmpty()).isEqualTo(true);
     }
@@ -36,7 +36,7 @@ public class PeriodCalculatorTest {
         input.add(new Period(0, LocalDate.of(2019, 1, 1), LocalDate.of(2019, 1, 2)));
         input.add(new Period(0, LocalDate.of(2019, 1, 3), LocalDate.of(2019, 1, 4)));
 
-        List<Period> output = calculator.MergeContiguousPeriods(input);
+        List<Period> output = calculator.mergeContiguousPeriods(input);
 
         Assertions.assertThat(output.size()).isEqualTo(1);
         Assertions.assertThat(output.get(0).getRate()).isEqualTo(0);
@@ -58,7 +58,7 @@ public class PeriodCalculatorTest {
                 endDate));
         PeriodCalculator calculator = new PeriodCalculator();
 
-        List<Period> output = calculator.MergeContiguousPeriods(input);
+        List<Period> output = calculator.mergeContiguousPeriods(input);
 
         Assertions.assertThat(output.size()).isEqualTo(1);
         Assertions.assertThat(output.get(0)).isEqualTo(new Period(0, startDate, endDate));
@@ -75,7 +75,7 @@ public class PeriodCalculatorTest {
         input.add(new Period(0, LocalDate.of(2019, 3, 1), endDate));
         PeriodCalculator calculator = new PeriodCalculator();
 
-        List<Period> output = calculator.MergeContiguousPeriods(input);
+        List<Period> output = calculator.mergeContiguousPeriods(input);
 
         Assertions.assertThat(output.size()).isEqualTo(2);
         Assertions.assertThat(output.get(0)).isEqualTo(nonZeroRatePeriod);
@@ -97,7 +97,7 @@ public class PeriodCalculatorTest {
         Period lastNonZeroPeriod = new Period(20, LocalDate.of(2019, 4, 1), LocalDate.of(2019, 4, 30));
         input.add(lastNonZeroPeriod);
 
-        List<Period> output = calculator.MergeContiguousPeriods(input);
+        List<Period> output = calculator.mergeContiguousPeriods(input);
 
         Assertions.assertThat(output.size()).isEqualTo(3);
         Assertions.assertThat(output.get(0)).isEqualTo(nonZeroRatePeriod);
@@ -120,7 +120,7 @@ public class PeriodCalculatorTest {
         Period lastNonZeroPeriod = new Period(20, LocalDate.of(2019, 4, 1), LocalDate.of(2019, 4, 30));
         input.add(lastNonZeroPeriod);
 
-        List<Period> output = calculator.MergeContiguousPeriods(input);
+        List<Period> output = calculator.mergeContiguousPeriods(input);
 
         Assertions.assertThat(output.size()).isEqualTo(3);
         Assertions.assertThat(output.get(0)).isEqualTo(nonZeroRatePeriod);
@@ -138,7 +138,7 @@ public class PeriodCalculatorTest {
         input.add(new Period(0, LocalDate.of(2019, 3, 1), endDate));
         input.add(new Period(0, startDate, LocalDate.of(2019, 2, 28)));
 
-        List<Period> output = calculator.MergeContiguousPeriods(input);
+        List<Period> output = calculator.mergeContiguousPeriods(input);
 
         Assertions.assertThat(output.size()).isEqualTo(2);
         Assertions.assertThat(output.contains(nonZeroRatePeriod)).isTrue();
@@ -157,7 +157,7 @@ public class PeriodCalculatorTest {
         Period nonMergedPeriod = new Period(0, LocalDate.of(2019, 5, 1), LocalDate.of(2019, 5, 30));
         input.add(nonMergedPeriod);
 
-        List<Period> output = calculator.MergeContiguousPeriods(input);
+        List<Period> output = calculator.mergeContiguousPeriods(input);
 
         Assertions.assertThat(output.size()).isEqualTo(2);
         Assertions.assertThat(output.contains(new Period(0, startDate, endDate))).isTrue();
@@ -176,7 +176,7 @@ public class PeriodCalculatorTest {
         LocalDate endDate = LocalDate.of(2019, 5, 30);
         input.add(new Period(0, LocalDate.of(2019, 5, 1), endDate));
 
-        List<Period> output = calculator.MergeContiguousPeriods(input);
+        List<Period> output = calculator.mergeContiguousPeriods(input);
 
         Assertions.assertThat(output.size()).isEqualTo(2);
         Assertions.assertThat(output.contains(new Period(0, startDate, endDate))).isTrue();
