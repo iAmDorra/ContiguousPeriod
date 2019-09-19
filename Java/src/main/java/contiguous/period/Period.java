@@ -52,4 +52,13 @@ public class Period implements Comparable<Period> {
     public boolean isContiguousTo(Period other) {
         return this.endDate.plusDays(1).isEqual(other.startDate);
     }
+
+    @Override
+    public String toString() {
+        return "Period{" +
+                "rate=" + rate +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
+    }
 }
