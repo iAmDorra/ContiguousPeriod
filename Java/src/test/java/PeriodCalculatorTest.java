@@ -9,7 +9,7 @@ public class PeriodCalculatorTest {
     @Test
     public void should_return_the_no_period_when_having_no_one_to_merge()
     {
-        List<RatedPeriod> input = new ArrayList<RatedPeriod>();
+        List<RatedPeriod> input = new ArrayList<>();
         PeriodCalculator calculator = new PeriodCalculator();
 
         List<RatedPeriod> output = calculator.mergeContiguousPeriods(input);
@@ -20,7 +20,7 @@ public class PeriodCalculatorTest {
     @Test
     public void should_return_the_same_period_when_having_only_one_to_merge()
     {
-        List<RatedPeriod> input = new ArrayList<RatedPeriod>();
+        List<RatedPeriod> input = new ArrayList<>();
         input.add(new RatedPeriod(0, LocalDate.of(2019,1,1), LocalDate.of(2019,1,2)));
         PeriodCalculator calculator = new PeriodCalculator();
 
@@ -32,7 +32,7 @@ public class PeriodCalculatorTest {
     @Test
     public void should_return_one_zero_rated_period_when_having_two_zero_rated_contiguous_periods()
     {
-        List<RatedPeriod> input = new ArrayList<RatedPeriod>();
+        List<RatedPeriod> input = new ArrayList<>();
         input.add(new RatedPeriod(0,
                 LocalDate.of(2019,1,1),
                 LocalDate.of(2019,1,2)));
@@ -50,7 +50,7 @@ public class PeriodCalculatorTest {
     @Test
     public void should_merge_periods_when_having_two_zero_rated_contiguous_periods()
     {
-        List<RatedPeriod> input = new ArrayList<RatedPeriod>();
+        List<RatedPeriod> input = new ArrayList<>();
         LocalDate startDate= LocalDate.of(2019,1,1);
         input.add(new RatedPeriod(
                 0,
@@ -71,7 +71,7 @@ public class PeriodCalculatorTest {
 
     @Test
     public void should_merge_only_zero_rated_periods(){
-        List<RatedPeriod> input = new ArrayList<RatedPeriod>();
+        List<RatedPeriod> input = new ArrayList<>();
         RatedPeriod nonZeroRatePeriod = new RatedPeriod(10, LocalDate.of(2019, 1, 1), LocalDate.of(2019, 1, 31));
         input.add(nonZeroRatePeriod);
         LocalDate startDate= LocalDate.of(2019,2,1);
@@ -89,7 +89,7 @@ public class PeriodCalculatorTest {
 
     @Test
     public void should_merge_zero_periods(){
-        List<RatedPeriod> input = new ArrayList<RatedPeriod>();
+        List<RatedPeriod> input = new ArrayList<>();
         RatedPeriod nonZeroRatePeriod = new RatedPeriod(10, LocalDate.of(2019, 1, 1), LocalDate.of(2019, 1, 31));
         input.add(nonZeroRatePeriod);
 
@@ -113,7 +113,7 @@ public class PeriodCalculatorTest {
 
     @Test
     public void should_merge_zero_contiguous_periods(){
-        List<RatedPeriod> input = new ArrayList<RatedPeriod>();
+        List<RatedPeriod> input = new ArrayList<>();
         RatedPeriod nonZeroRatePeriod = new RatedPeriod(10, LocalDate.of(2019, 1, 1), LocalDate.of(2019, 1, 31));
         input.add(nonZeroRatePeriod);
 
@@ -137,7 +137,7 @@ public class PeriodCalculatorTest {
 
     @Test
     public void should_merge_zero_rate_periods_when_having_mixed_rated_periods(){
-        List<RatedPeriod> input = new ArrayList<RatedPeriod>();
+        List<RatedPeriod> input = new ArrayList<>();
         RatedPeriod nonZeroRatePeriod = new RatedPeriod(10, LocalDate.of(2019, 1, 1), LocalDate.of(2019, 1, 31));
         input.add(nonZeroRatePeriod);
         LocalDate startDate= LocalDate.of(2019,2,1);
@@ -155,7 +155,7 @@ public class PeriodCalculatorTest {
 
     @Test
     public void Should_merge_only_first_zero_contiguous_periods(){
-        List<RatedPeriod> input = new ArrayList<RatedPeriod>();
+        List<RatedPeriod> input = new ArrayList<>();
         LocalDate startDate = LocalDate.of(2019,2,1);
         input.add(new RatedPeriod(0, startDate, LocalDate.of(2019,2,28)));
 
@@ -175,7 +175,7 @@ public class PeriodCalculatorTest {
 
     @Test
     public void should_merge_only_latest_zero_contiguous_periods(){
-        List<RatedPeriod> input = new ArrayList<RatedPeriod>();
+        List<RatedPeriod> input = new ArrayList<>();
         RatedPeriod nonMergedPeriod = new RatedPeriod(0, LocalDate.of(2019,2,1), LocalDate.of(2019,2,28));
         input.add(nonMergedPeriod);
 
