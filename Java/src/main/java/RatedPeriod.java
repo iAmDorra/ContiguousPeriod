@@ -17,7 +17,7 @@ public class RatedPeriod {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RatedPeriod period = (RatedPeriod) o;
-        return rate == period.rate &&
+        return IsRateEqualTo(period.rate) &&
                 Objects.equals(startDate, period.startDate) &&
                 Objects.equals(endDate, period.endDate);
     }
@@ -27,8 +27,8 @@ public class RatedPeriod {
         return Objects.hash(rate, startDate, endDate);
     }
 
-    public int getRate() {
-        return rate;
+    public boolean IsRateEqualTo(int rateValue) {
+        return rate == rateValue;
     }
 
     public RatedPeriod merge(RatedPeriod other) {

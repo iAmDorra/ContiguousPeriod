@@ -44,7 +44,7 @@ public class PeriodCalculatorTest {
         List<RatedPeriod> output = calculator.mergeContiguousPeriods(input);
 
         Assertions.assertThat(output).hasSize(1);
-        Assertions.assertThat(output.get(0).getRate()).isEqualTo(0);
+        Assertions.assertThat(output.get(0).IsRateEqualTo(0)).isTrue();
     }
 
     @Test

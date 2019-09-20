@@ -8,10 +8,10 @@ public class PeriodCalculator {
     public List<RatedPeriod> mergeContiguousPeriods(List<RatedPeriod> periods) {
         if(periods.size()> 1) {
             Stream<RatedPeriod> zeroPeriods = periods.stream()
-                    .filter(p1 -> p1.getRate() == 0)
+                    .filter(p1 -> p1.IsRateEqualTo(0))
                     .sorted(getPeriodComparator());
             Stream<RatedPeriod> mergedPeriods = mergeZeroRateContiguousPeriods(zeroPeriods);
-            Stream<RatedPeriod> nonZeroRatePeriods = periods.stream().filter(p -> p.getRate() != 0);
+            Stream<RatedPeriod> nonZeroRatePeriods = periods.stream().filter(p -> !p.IsRateEqualTo(0));
             return Stream.concat(nonZeroRatePeriods, mergedPeriods).collect(Collectors.toList());
         }
         return periods;
