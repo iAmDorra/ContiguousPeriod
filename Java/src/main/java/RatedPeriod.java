@@ -2,9 +2,9 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class RatedPeriod {
-    private int rate;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private final int rate;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
 
     public RatedPeriod(int rate, LocalDate startDate, LocalDate endDate) {
         this.rate = rate;
