@@ -7,7 +7,7 @@ import java.util.List;
 
 public class PeriodCalculatorTest {
     @Test
-    public void should_return_the_no_period_when_having_no_one_to_merge()
+    public void should_return_no_period_when_having_no_one_to_merge()
     {
         List<RatedPeriod> input = new ArrayList<>();
         PeriodCalculator calculator = new PeriodCalculator();
