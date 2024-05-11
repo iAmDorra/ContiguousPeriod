@@ -5,28 +5,28 @@ namespace ContiguousPeriod.Tests
 {
     internal class PeriodCalculator
     {
-        internal IEnumerable<Period> CalculerPeriodeContigue(IEnumerable<Period> source)
+        internal IEnumerable<Period> CalculateContiguousPeriods(IEnumerable<Period> source)
         {
-            var periodeContigues = new List<Period>();
-            foreach (var periode in source.Where(p => p.Value == 0))
+            var contiguousPeriods = new List<Period>();
+            foreach (var period in source.Where(p => p.Value == 0))
             {
-                UpdateEndDate(periodeContigues, periode);
+                UpdateEndDate(contiguousPeriods, period);
             }
 
-            periodeContigues.AddRange(source.Where(p => p.Value != 0));
-            return periodeContigues.OrderBy(p => p.Start);
+            contiguousPeriods.AddRange(source.Where(p => p.Value != 0));
+            return contiguousPeriods.OrderBy(p => p.Start);
         }
 
-        private static void UpdateEndDate(List<Period> periodeContigues, Period periode)
+        private static void UpdateEndDate(List<Period> contiguousPeriods, Period period)
         {
-            var savedZeroPeriod = periodeContigues.LastOrDefault(p => p.Value == 0);
-            if (savedZeroPeriod != null && periode.Start == savedZeroPeriod.End.AddDays(1))
+            var savedZeroPeriod = contiguousPeriods.LastOrDefault(p => p.Value == 0);
+            if (savedZeroPeriod != null && period.Start == savedZeroPeriod.End.AddDays(1))
             {
-                savedZeroPeriod.updateEndDate(periode.End);
+                savedZeroPeriod.UpdateEndDate(period.End);
             }
             else
             {
-                periodeContigues.Add(new Period(periode.Start, periode.End, 0));
+                contiguousPeriods.Add(new Period(period.Start, period.End, 0));
             }
         }
     }

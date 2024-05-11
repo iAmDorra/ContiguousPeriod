@@ -23,7 +23,7 @@ namespace ContiguousPeriod.Tests
                 this.Value == other.Value;
         }
 
-        internal void updateEndDate(DateTime fin)
+        internal void UpdateEndDate(DateTime fin)
         {
             this.End = fin;
         }
