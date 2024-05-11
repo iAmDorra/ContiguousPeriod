@@ -2,9 +2,9 @@
 
 namespace ContiguousPeriod.Tests
 {
-    internal class Periode : IEquatable<Periode>
+    internal class Period : IEquatable<Period>
     {
-        public Periode(DateTime start, DateTime end, int value)
+        public Period(DateTime start, DateTime end, int value)
         {
             this.Start = start;
             this.End = end;
@@ -15,7 +15,7 @@ namespace ContiguousPeriod.Tests
         public DateTime End { get; private set; }
         public decimal Value { get; private set; }
 
-        public bool Equals(Periode other)
+        public bool Equals(Period other)
         {
             return other != null &&
                 this.Start == other.Start &&
@@ -30,7 +30,7 @@ namespace ContiguousPeriod.Tests
 
         public override bool Equals(object obj)
         {
-            return this.Equals((Periode)obj);
+            return this.Equals((Period)obj);
         }
     }
 }

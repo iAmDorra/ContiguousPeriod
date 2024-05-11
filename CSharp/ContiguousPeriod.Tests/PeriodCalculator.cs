@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace ContiguousPeriod.Tests
 {
-    internal class PeriodeCalculator
+    internal class PeriodCalculator
     {
-        internal IEnumerable<Periode> CalculerPeriodeContigue(IEnumerable<Periode> source)
+        internal IEnumerable<Period> CalculerPeriodeContigue(IEnumerable<Period> source)
         {
-            var periodeContigues = new List<Periode>();
+            var periodeContigues = new List<Period>();
             foreach (var periode in source.Where(p => p.Value == 0))
             {
                 UpdateEndDate(periodeContigues, periode);
@@ -17,7 +17,7 @@ namespace ContiguousPeriod.Tests
             return periodeContigues.OrderBy(p => p.Start);
         }
 
-        private static void UpdateEndDate(List<Periode> periodeContigues, Periode periode)
+        private static void UpdateEndDate(List<Period> periodeContigues, Period periode)
         {
             var savedZeroPeriod = periodeContigues.LastOrDefault(p => p.Value == 0);
             if (savedZeroPeriod != null && periode.Start == savedZeroPeriod.End.AddDays(1))
@@ -26,7 +26,7 @@ namespace ContiguousPeriod.Tests
             }
             else
             {
-                periodeContigues.Add(new Periode(periode.Start, periode.End, 0));
+                periodeContigues.Add(new Period(periode.Start, periode.End, 0));
             }
         }
     }
