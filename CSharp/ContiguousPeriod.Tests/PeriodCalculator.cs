@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace ContiguousPeriod.Tests
 {
-    internal class PeriodCalculator
+    public class PeriodCalculator
     {
-        internal IEnumerable<Period> CalculateContiguousPeriods(IEnumerable<Period> source)
+        public IEnumerable<Period> CalculateContiguousPeriods(IEnumerable<Period> source)
         {
             var contiguousPeriods = new List<Period>();
             foreach (var period in source.Where(p => p.Value == 0))

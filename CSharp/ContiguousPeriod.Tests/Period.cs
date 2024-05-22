@@ -2,7 +2,7 @@
 
 namespace ContiguousPeriod.Tests
 {
-    internal class Period : IEquatable<Period>
+    public class Period : IEquatable<Period>
     {
         public Period(DateTime start, DateTime end, int value)
         {
