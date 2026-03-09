@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 // ReSharper disable PossibleMultipleEnumeration
 
@@ -27,7 +28,10 @@ namespace ContiguousPeriod.Tests
             }
             else
             {
-                contiguousPeriods.Add(new Period(period.Start, period.End, 0));
+                var periodStart = period.Start;
+                var periodEnd = period.End;
+                var value = 0;
+                contiguousPeriods.Add(Period.Of(periodStart, periodEnd, value));
             }
         }
     }

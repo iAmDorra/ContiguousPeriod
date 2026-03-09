@@ -4,7 +4,7 @@ namespace ContiguousPeriod.Tests
 {
     public class Period : IEquatable<Period>
     {
-        public Period(DateTime start, DateTime end, int value)
+        private Period(DateTime start, DateTime end, int value)
         {
             this.Start = start;
             this.End = end;
@@ -32,5 +32,12 @@ namespace ContiguousPeriod.Tests
         {
             return this.Equals((Period)obj);
         }
+
+        public static Period Of(DateTime periodStart, DateTime periodEnd, int value)
+        {
+            return new Period(periodStart, periodEnd, value);
+        }
     }
+
+   
 }
